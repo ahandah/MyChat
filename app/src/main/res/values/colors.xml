@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="font_green">#ff3bbd79</color>
+    <color name="tab_font_no_active">#76808E</color>
+    <color name="font_2">#222222</color>
+</resources>

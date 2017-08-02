@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        icon="@mipmap/tab_message"
+        id="@+id/message"
+        title="消息" />
+
+    <tab
+        icon="@mipmap/tab_my"
+        id="@+id/contact"
+        title="联系人" />
+
+    <tab
+        icon="@mipmap/tab_maopao"
+        id="@+id/news"
+        title="动态" />
+
+</tabs>
