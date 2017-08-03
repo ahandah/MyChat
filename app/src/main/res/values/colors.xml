@@ -6,4 +6,5 @@
     <color name="font_green">#ff3bbd79</color>
     <color name="tab_font_no_active">#76808E</color>
     <color name="font_2">#222222</color>
+    <color name="divide">#ECECEC</color>
 </resources>

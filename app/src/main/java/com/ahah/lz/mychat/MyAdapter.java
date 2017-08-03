@@ -28,9 +28,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
         notifyDataSetChanged();
     }
 
-    public String getArray(int i){
-        return mData.get(i).content;
-    }
     //获得用户头像图面
     private ImageLoadTool imageLoadTool = new ImageLoadTool();
     protected void iconfromNetwork(ImageView view, String url) {
@@ -54,9 +51,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
         switch (viewType){
             case 1:
-                return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_right , parent , false));
+                return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_right, parent , false));
             case 2:
-                return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_left, parent , false));
+                return new MyHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_left, parent , false));
         }
         return null;
     }
