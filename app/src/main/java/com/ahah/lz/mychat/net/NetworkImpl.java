@@ -35,8 +35,6 @@ public class NetworkImpl {
 
         AsyncHttpClient client = MyAsyncHttpClient.createClient(context);
 
-
-
         JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler(){
 
             @Override
@@ -61,26 +59,12 @@ public class NetworkImpl {
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-//                super.onSuccess(statusCode, headers, responseString);
-                System.out.println("success---responseString--"+responseString);
-            }
-
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-////                Log.v("ERROR" , "ERROR");
-////                Log.v("ERROR" , statusCode+"");
-//                System.out.println("test-code"+statusCode);
-//                System.out.println("test-code"+errorResponse);
-//            }
-
-            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 //                super.onFailure(statusCode, headers, responseString, throwable);
-                System.out.println("onFailure---"+responseString);
-                System.out.println("onFailure---"+statusCode);
-                System.out.println("onFailure---"+headers);
-                System.out.println("onFailure---"+throwable);
+                System.out.println("onFailure--respon--"+responseString);
+                System.out.println("onFailure--statusCode--"+statusCode);
+                System.out.println("onFailure--headers--"+headers);
+                System.out.println("onFailure--throwable--"+throwable);
             }
 
 
@@ -88,6 +72,7 @@ public class NetworkImpl {
 
         switch (type){
             case Get:
+                client.post(url , jsonHttpResponseHandler);
                 break;
             case Post:
                 client.post(url , params , jsonHttpResponseHandler);

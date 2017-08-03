@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.message.ChatActivity;
 import com.ahah.lz.mychat.common.BaseActivity;
 import com.ahah.lz.mychat.model.UserObject;
@@ -18,7 +19,11 @@ public class LoginActivity extends BaseActivity {
     private EditText euname;
     private EditText eupwd;
     private String uname , upwd;
-    private String HOST_LOGIN = "http://192.168.11.107/MyChat/login1.action";
+    private String HOST_LOGIN =
+            Global.HOST + Global.LOGIN;
+//            "http://192.168.11.107/MyChat/LoginServlet";
+//            "http://192.168.11.107/MyChat/login1.action";
+//            "http://192.168.11.107/MyChat/login.jsp";
     private String TAG_LOGIN = "TAG_LOGIN";
 
     @Override
