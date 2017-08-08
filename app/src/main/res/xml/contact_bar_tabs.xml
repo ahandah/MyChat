@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        id="@+id/friends"
+        title="好友" />
+
+    <tab
+        id="@+id/group"
+        title="群" />
+
+    <tab
+        id="@+id/discussion"
+        title="讨论组" />
+
+</tabs>

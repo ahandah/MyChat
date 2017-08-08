@@ -33,6 +33,7 @@ public class BaseActivity extends AppCompatActivity implements NetworkCallback {
         networkImpl.loadData( url , params , tag , NetworkImpl.Request.Post);
     }
 
+
     @Override
     public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
 

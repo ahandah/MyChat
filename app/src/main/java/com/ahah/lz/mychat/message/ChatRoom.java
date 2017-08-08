@@ -3,6 +3,9 @@ package com.ahah.lz.mychat.message;
 import com.ahah.lz.mychat.model.ChatModel;
 import com.ahah.lz.mychat.model.UserObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +15,23 @@ import java.util.ArrayList;
 
 public class ChatRoom implements Serializable{
 
+    public String roomName;
+    public String time;
+    public String lastTime;
+    public String icon;
+
     public static ArrayList<ChatModel> getData = new ArrayList<ChatModel>();
+
+    public ChatRoom(){
+
+    }
+
+    public ChatRoom(JSONObject jsonObject) throws JSONException{
+        roomName = jsonObject.getString("roomName");
+        time = jsonObject.getString("time");
+        lastTime = jsonObject.getString("lastTime");
+        icon = jsonObject.getString("icon");
+    }
 
     public static ArrayList<ChatModel> getAddData(){
 

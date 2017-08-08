@@ -2,13 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ahah.lz.mychat.contact.ContactFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="联系人" />
+        android:orientation="vertical">
+
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/contactBar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f8f8f8"
+            app:bb_activeTabColor="@color/contact_blue"
+            app:bb_tabXmlResource="@xml/contact_bar_tabs"
+            app:bb_titleTextAppearance="@style/ContactTabTitle"/>
+
+            <!-- TODO: Update blank fragment layout -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/contactList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
 
 </FrameLayout>

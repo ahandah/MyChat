@@ -53,7 +53,7 @@ public class LoginActivity extends BaseActivity {
 
         UserObject user = new UserObject(response.getJSONObject("data"));
 
-        Intent it = new Intent(LoginActivity.this , ChatActivity.class);
+        Intent it = new Intent(LoginActivity.this , MainActivity.class);
         startActivity(it);
     }
 

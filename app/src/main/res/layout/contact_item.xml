@@ -4,8 +4,8 @@
     android:layout_height="70dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:layout_marginTop="5dp">
+    android:paddingBottom="3dp"
+    android:layout_marginBottom="3dp">
     <View
         android:layout_width="match_parent"
         android:background="@color/divide"
@@ -13,14 +13,14 @@
         android:layout_marginRight="-15dp"
         android:layout_height="1dp" />
     <RelativeLayout
-        android:id="@+id/messageItem"
+        android:id="@+id/ctItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingTop="10dp">
 
         <com.ahah.lz.mychat.widget.CircleImageView
-            android:id="@+id/chatRmIcon"
+            android:id="@+id/ctIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@mipmap/ic_launcher"
@@ -28,23 +28,23 @@
             app:border_width="1dp"/>
 
         <TextView
-            android:id="@+id/chatRmName"
+            android:id="@+id/ctName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/chatRmIcon"
-            android:layout_toRightOf="@+id/chatRmIcon"
+            android:layout_alignTop="@+id/ctIcon"
+            android:layout_toRightOf="@+id/ctIcon"
             android:layout_marginLeft="5dp"
-            android:text="chat name"
+            android:text="ct name"
             android:textSize="20dp"/>
 
         <TextView
-            android:id="@+id/chatMessage"
+            android:id="@+id/ctTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/chatRmIcon"
-            android:layout_toRightOf="@+id/chatRmIcon"
+            android:layout_alignBottom="@+id/ctIcon"
+            android:layout_toRightOf="@+id/ctIcon"
             android:layout_marginLeft="7dp"
-            android:text="message"
+            android:text="tag"
             android:textSize="15dp"/>
     </RelativeLayout>
 

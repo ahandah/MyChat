@@ -1,5 +1,6 @@
 package com.ahah.lz.mychat.model;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -19,9 +20,11 @@ public class UserObject implements Serializable {
 
     }
 
-    public UserObject(JSONObject response){
+    public UserObject(JSONObject response) throws JSONException{
 
         System.out.println("UserObject---"+response);
+        name = response.getString("fname");
+        icon = response.getString("icon");
 
     }
 

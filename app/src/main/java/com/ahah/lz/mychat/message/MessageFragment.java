@@ -8,21 +8,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahah.lz.mychat.R;
+import com.ahah.lz.mychat.common.BaseFragment;
 import com.ahah.lz.mychat.common.Global;
+import com.ahah.lz.mychat.common.ImageLoadTool;
 import com.ahah.lz.mychat.widget.CircleImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessageFragment extends Fragment {
+public class MessageFragment extends BaseFragment {
 
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
+    protected ArrayList<ChatRoom> msgData = new ArrayList<>();
+    private String HOST_MESSAGE = Global.HOST + Global.MESSAGE;
+    private String TAG_MESSAGE = "TAG_MESSAGE";
 
     public MessageFragment() {
         // Required empty public constructor
@@ -33,30 +45,42 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-//        initMessageFragment(view);
+//        getNetwork(HOST_MESSAGE , TAG_MESSAGE);
         return initMessageFragment(view);
     }
 
     private View initMessageFragment(View view) {
-        System.out.println("init--------");
         msgRecyclerView = (RecyclerView) view.findViewById(R.id.messageList);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext() , LinearLayoutManager.VERTICAL , false);
         msgRecyclerView.setLayoutManager(manager);
         adapter = new MsgAdapter();
-        adapter.addData();
+//        adapter.addData();
+//        adapter.mData = msgData;
         msgRecyclerView.setAdapter(adapter);
+        ImageLoad();
         return view;
+    }
+
+    //使用默认图片读取配置
+    public void ImageLoad(){
+        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(getContext());
+        ImageLoader.getInstance().init(configuration);
     }
 
     public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.MsgHolder>{
 
         private ArrayList<ChatRoom> mData = new ArrayList<ChatRoom>();
 
-        public void addData(){
-            mData.add(new ChatRoom());
-            mData.add(new ChatRoom());
-            mData.add(new ChatRoom());
-            System.out.println("init--addData--"+mData.size());
+//        public void addData(){
+//            mData.add(new ChatRoom());
+//            mData.add(new ChatRoom());
+//            mData.add(new ChatRoom());
+//        }
+
+        //获得用户头像图面
+        private ImageLoadTool imageLoadTool = new ImageLoadTool();
+        protected void iconfromNetwork(ImageView view, String url) {
+            imageLoadTool.loadImage(view, url);
         }
 
         @Override
@@ -68,21 +92,25 @@ public class MessageFragment extends Fragment {
         public void onBindViewHolder(MsgHolder holder, final int position) {
 
             MsgHolder.ViewHolder bindHolder = holder.holder;
+
             bindHolder.messageItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     System.out.println("onclick--no--"+position);
                 }
             });
+
+            bindHolder.chatRmName.setText(mData.get(position).roomName);
+            iconfromNetwork(bindHolder.chatRmIcon , Global.HOST+"icon/"+mData.get(position).icon);
+
         }
 
         @Override
         public int getItemCount() {
-            System.out.println("init--message--fragment--"+mData.size());
             return mData != null ? mData.size() : 0 ;
 //            return 1;
         }
-        
+
         public class MsgHolder extends RecyclerView.ViewHolder{
 
             ViewHolder holder = new ViewHolder();
@@ -104,5 +132,25 @@ public class MessageFragment extends Fragment {
             }
         }
     }
+
+
+    @Override
+    public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
+
+        if (code == 2){
+            if (tag.equals(TAG_MESSAGE)){
+                JSONArray jsonArray = respanse.getJSONArray("data");
+                for (int i = 0 ; i < jsonArray.length() ; i ++){
+                    ChatRoom chatRoom = new ChatRoom(jsonArray.getJSONObject(i));
+//                    msgData.add(chatRoom);
+                    adapter.mData.add(chatRoom);
+                    System.out.println("parseJson--msgData--"+adapter.mData.size());
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
 
 }
