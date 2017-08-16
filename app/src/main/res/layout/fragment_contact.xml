@@ -5,27 +5,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.ahah.lz.mychat.contact.ContactFragment">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/contactBar"
+        <View
+        android:layout_width="match_parent"
+        android:background="@color/divide"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginRight="-15dp"
+        android:layout_height="1dp" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#f8f8f8"
-            app:bb_activeTabColor="@color/contact_blue"
-            app:bb_tabXmlResource="@xml/contact_bar_tabs"
-            app:bb_titleTextAppearance="@style/ContactTabTitle"/>
+            android:layout_height="45dp"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/ContactTabTitle"/>
 
-            <!-- TODO: Update blank fragment layout -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/contactList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/divide"
+            android:layout_marginLeft="-15dp"
+            android:layout_marginRight="-15dp"
+            android:layout_height="1dp" />
 
-            </android.support.v7.widget.RecyclerView>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ctPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        </android.support.v4.view.ViewPager>
+
+        <!--<FrameLayout-->
+            <!--android:id="@+id/ctContext"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
+
+        <!--</FrameLayout>-->
 
     </LinearLayout>
 

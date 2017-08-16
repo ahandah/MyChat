@@ -46,7 +46,7 @@ public class MessageFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 //        getNetwork(HOST_MESSAGE , TAG_MESSAGE);
-        return initMessageFragment(view);
+        return view;
     }
 
     private View initMessageFragment(View view) {
