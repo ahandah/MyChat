@@ -17,7 +17,9 @@ import cz.msebera.android.httpclient.cookie.Cookie;
 public class Global {
 
     public static final String HOST =
-            "http://192.168.11.107/MyChat/";
+//            "http://192.168.11.107/MyChat/";
+            "http://192.168.1.7:70/MyChat/";        //学校
+    public static final String LOGINTAG = "LOGINTAG";
     public static final String LOGIN = "LoginServlet";
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
     public static final String MESSAGE = "MessageServlet";
