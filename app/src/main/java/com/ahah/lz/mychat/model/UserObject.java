@@ -24,7 +24,7 @@ public class UserObject implements Serializable {
 
     public UserObject(JSONObject response) throws JSONException{
     //临时先这样改，登入时验证true则使用第一个
-        if(response.getString("loginTag").equals(Global.LOGIN)){
+        if(response.getString("loginTag").equals(Global.LOGINTAG)){
             System.out.println("UserObject---"+response);
             name = response.getString("name");
         }else {
