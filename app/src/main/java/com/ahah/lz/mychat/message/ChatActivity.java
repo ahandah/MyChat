@@ -11,22 +11,30 @@ import android.widget.Toast;
 
 import com.ahah.lz.mychat.MyAdapter;
 import com.ahah.lz.mychat.R;
+import com.ahah.lz.mychat.common.BaseActivity;
+import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.model.AccountInfo;
 import com.ahah.lz.mychat.model.ChatModel;
 import com.ahah.lz.mychat.model.UserObject;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class ChatActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class ChatActivity extends BaseActivity {
 
     private EditText tv;
     private RecyclerView mRecyclerView;
     private MyAdapter adapter;
+    private String HOST_CHATDATA = Global.HOST + Global.CHATDATA;
+    private String TAG_CHATDATA = "TAG_CHATDATA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        getChatData();
         mRecyclerView = (RecyclerView) findViewById(R.id.recycleListView);
         tv = (EditText) findViewById(R.id.message);
 
@@ -40,6 +48,13 @@ public class ChatActivity extends AppCompatActivity {
         ImageLoad();
 
     }
+
+    public void getChatData(){
+
+        getNetwork(HOST_CHATDATA , TAG_CHATDATA);
+
+    }
+
     //使用默认图片读取配置
     public void ImageLoad(){
         ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(ChatActivity.this);
@@ -65,5 +80,8 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
+        System.out.println("chatActivity----"+code+"---"+respanse+"---"+tag);
+    }
 }

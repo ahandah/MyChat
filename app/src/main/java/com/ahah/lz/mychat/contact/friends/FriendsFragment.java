@@ -1,6 +1,7 @@
 package com.ahah.lz.mychat.contact.friends;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.ahah.lz.mychat.R;
 import com.ahah.lz.mychat.common.BaseFragment;
 import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.common.ImageLoadTool;
+import com.ahah.lz.mychat.message.ChatActivity;
 import com.ahah.lz.mychat.model.Friends;
 import com.ahah.lz.mychat.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -145,6 +147,9 @@ public class FriendsFragment extends BaseFragment {
                         @Override
                         public void onClick(View v) {
                             System.out.println("onclick--no--"+position);
+                            //在这里传入好友的用户类
+                            Intent it = new Intent(getContext() , ChatActivity.class);
+                            startActivity(it);
                         }
                     });
 

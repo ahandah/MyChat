@@ -24,6 +24,7 @@ public class Global {
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
     public static final String MESSAGE = "MessageServlet";
     public static final String FRIENDS = "FriendsServlet";
+    public static final String CHATDATA = "ChatServlet";
 
 
     public static void syncCookie(Context context){
