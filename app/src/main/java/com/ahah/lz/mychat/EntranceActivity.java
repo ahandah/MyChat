@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ahah.lz.mychat.common.Global;
+import com.ahah.lz.mychat.model.AccountInfo;
 import com.ahah.lz.mychat.net.NetworkCallback;
 import com.ahah.lz.mychat.net.NetworkImpl;
 
@@ -30,7 +31,8 @@ public class EntranceActivity extends AppCompatActivity implements NetworkCallba
 
         if (code == 1){
             if (tag.equals("CookieLogin")){
-
+                Global.Account = AccountInfo.loadAccount(this);
+                System.out.println("entrance-----"+Global.Account.name);
                 System.out.println("Cookie--login-success");
                 Intent it = new Intent(EntranceActivity.this , MainActivity.class);
                 startActivity(it);

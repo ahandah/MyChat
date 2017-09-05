@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.message.ChatRoom;
 import com.ahah.lz.mychat.common.ImageLoadTool;
 import com.ahah.lz.mychat.model.ChatModel;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
-    private ArrayList<ChatModel> mData = new ArrayList<ChatModel>();
+    public ArrayList<ChatModel> mData = new ArrayList<ChatModel>();
 
     public void addData(ChatModel chat){
         mData.add(chat);
@@ -35,10 +36,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
     }
 
     public MyAdapter(ArrayList<ChatModel> list){
-
+//        System.out.println("---MyAdapter---"+list.get(0).user.name);
         mData.clear();
         if (list != null && list.size() > 0) {
             if (mData != null && list != null) {
+                System.out.println("-----1111------");
                 mData.addAll(list);
                 notifyItemRangeChanged(mData.size(),list.size());
             }
@@ -63,12 +65,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder>{
 
         MyHolder.ViewHolder bindHolder = holder.holder;
         holder.setData(mData.get(position).content);
-        iconfromNetwork(bindHolder.userIcon , mData.get(position).user.icon);
+        iconfromNetwork(bindHolder.userIcon , Global.HOST+"icon/"+mData.get(position).user.icon);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mData.get(position).user.id;
+
+        if (mData.get(position).user.name.equals(Global.Account.name)){
+            return 1;
+        }else {
+            return 2;
+        }
+//        return mData.get(position).user.id;
     }
 
     @Override

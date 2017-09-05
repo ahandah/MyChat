@@ -3,13 +3,14 @@ package com.ahah.lz.mychat.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by 40660 on 2017/8/11.
  */
 
-public class Friends extends UserObject {
+public class Friends extends UserObject implements Serializable {
 
     public int friendTag = 1;
     public String frName;

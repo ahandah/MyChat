@@ -1,11 +1,13 @@
 package com.ahah.lz.mychat;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,5 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void uIcon(View v){
         Toast.makeText(MainActivity.this , "打开侧边菜单" , Toast.LENGTH_SHORT).show();
+        Intent it = new Intent(this , LoginActivity.class);
+        startActivity(it);
     }
 }

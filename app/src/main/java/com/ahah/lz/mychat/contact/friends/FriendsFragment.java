@@ -18,6 +18,7 @@ import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.common.ImageLoadTool;
 import com.ahah.lz.mychat.message.ChatActivity;
 import com.ahah.lz.mychat.model.Friends;
+import com.ahah.lz.mychat.model.UserObject;
 import com.ahah.lz.mychat.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -146,9 +147,16 @@ public class FriendsFragment extends BaseFragment {
                     frHolder.holder.ctItem.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            System.out.println("onclick--no--"+position);
-                            //在这里传入好友的用户类
+                            System.out.println("onclick--no--"+mData.get(position).name+ mData.get(position).icon);
+//                            Friends friend = mData.get(position);
+                            UserObject friend = new UserObject(mData.get(position).name , mData.get(position).icon);
+                            System.out.println("--friendsfragment---"+friend.name);
+                            //在这里传入好友的用户类（通过Bundle）
                             Intent it = new Intent(getContext() , ChatActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("friend" , friend);
+                            it.putExtras(bundle);
+
                             startActivity(it);
                         }
                     });

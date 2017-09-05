@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.message.ChatActivity;
 import com.ahah.lz.mychat.common.BaseActivity;
+import com.ahah.lz.mychat.model.AccountInfo;
 import com.ahah.lz.mychat.model.UserObject;
 import com.loopj.android.http.RequestParams;
 
@@ -52,7 +53,9 @@ public class LoginActivity extends BaseActivity {
     private void loginSuccess(JSONObject response) throws JSONException{
 
         UserObject user = new UserObject(response.getJSONObject("data"));
-
+        Global.Account = user;
+        System.out.println("loginSuccess---"+user.name);
+        AccountInfo.saveAccount(this , user);
         Intent it = new Intent(LoginActivity.this , MainActivity.class);
         startActivity(it);
     }

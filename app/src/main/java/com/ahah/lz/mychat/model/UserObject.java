@@ -27,6 +27,7 @@ public class UserObject implements Serializable {
         if(response.getString("loginTag").equals(Global.LOGINTAG)){
             System.out.println("UserObject---"+response);
             name = response.getString("name");
+            icon = response.getString("icon");
         }else {
             System.out.println("UserObject---"+response);
             name = response.getString("fname");
@@ -35,8 +36,12 @@ public class UserObject implements Serializable {
 
     }
 
-    public UserObject(int id ,String name , String icon ){
-        this.id = id;
+    public UserObject(int id , String name , String icon ){
+        this.name = name;
+        this.icon = icon;
+    }
+
+    public UserObject(String name , String icon ){
         this.name = name;
         this.icon = icon;
     }
