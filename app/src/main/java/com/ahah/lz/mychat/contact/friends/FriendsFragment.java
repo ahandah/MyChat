@@ -147,9 +147,10 @@ public class FriendsFragment extends BaseFragment {
                     frHolder.holder.ctItem.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            System.out.println("fid-----"+mData.get(position).fid);
                             System.out.println("onclick--no--"+mData.get(position).name+ mData.get(position).icon);
 //                            Friends friend = mData.get(position);
-                            UserObject friend = new UserObject(mData.get(position).name , mData.get(position).icon);
+                            UserObject friend = new UserObject(mData.get(position).fid , mData.get(position).name , mData.get(position).icon);
                             System.out.println("--friendsfragment---"+friend.name);
                             //在这里传入好友的用户类（通过Bundle）
                             Intent it = new Intent(getContext() , ChatActivity.class);

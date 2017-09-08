@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class UserObject implements Serializable {
 
     public int id;
+    public int fid;
     public String icon;
     public String name;
 
@@ -36,7 +37,8 @@ public class UserObject implements Serializable {
 
     }
 
-    public UserObject(int id , String name , String icon ){
+    public UserObject(int fid , String name , String icon ){
+        this.fid = fid;
         this.name = name;
         this.icon = icon;
     }

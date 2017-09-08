@@ -31,6 +31,28 @@ public class NetworkImpl {
         this.callback = callback;
     }
 
+    public void connectedSocket(String url , Request type){
+        AsyncHttpClient client = MyAsyncHttpClient.createClient(context);
+        JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+//                super.onFailure(statusCode, headers, responseString, throwable);
+                System.out.println("onFailure--respon--"+responseString);
+                System.out.println("onFailure--statusCode--"+statusCode);
+                System.out.println("onFailure--headers--"+headers);
+                System.out.println("onFailure--throwable--"+throwable);
+            }
+
+
+        };
+    }
+
     public void loadData(String url , RequestParams params , final String tag , Request type){
 
         AsyncHttpClient client = MyAsyncHttpClient.createClient(context);
@@ -72,9 +94,11 @@ public class NetworkImpl {
 
         switch (type){
             case Get:
+                System.out.println("--get-"+url);
                 client.post(url , jsonHttpResponseHandler);
                 break;
             case Post:
+                System.out.println("--post-"+url);
                 client.post(url , params , jsonHttpResponseHandler);
                 break;
             case Put:

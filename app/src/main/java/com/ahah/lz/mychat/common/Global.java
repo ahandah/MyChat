@@ -26,6 +26,7 @@ public class Global {
     public static final String MESSAGE = "MessageServlet";
     public static final String FRIENDS = "FriendsServlet";
     public static final String CHATDATA = "ChatServlet";
+    public static final String CHATSOCKET = "ChatSocketServlet";
 
     public static UserObject Account = null;
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Friends extends UserObject implements Serializable {
 
     public int friendTag = 1;
+    public int fid = 0;
     public String frName;
 //    public String name;
 //    public String icon;
@@ -32,6 +33,7 @@ public class Friends extends UserObject implements Serializable {
 
     public Friends(JSONObject response) throws JSONException {
 
+        fid = response.getInt("fid");
         frName = response.getString("frgroup");
         name = response.getString("fname");
         icon = response.getString("icon");

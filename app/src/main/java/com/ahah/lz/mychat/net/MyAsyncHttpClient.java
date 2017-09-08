@@ -18,4 +18,11 @@ public class MyAsyncHttpClient {
         client.setTimeout(30*1000);
         return client;
     }
+
+//    public static AsyncHttpClient socketClient(Context context){
+//
+//        AsyncHttpClient client = new AsyncHttpClient
+//        return
+//    }
+
 }
