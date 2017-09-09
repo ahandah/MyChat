@@ -9,6 +9,8 @@ import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.model.AccountInfo;
 import com.ahah.lz.mychat.net.NetworkCallback;
 import com.ahah.lz.mychat.net.NetworkImpl;
+import com.wilddog.wilddogcore.WilddogApp;
+import com.wilddog.wilddogcore.WilddogOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +24,9 @@ public class EntranceActivity extends AppCompatActivity implements NetworkCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrance);
+        //      初始化wilddog
+        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
+        WilddogApp.initializeApp(this, options);
         getNetwork(HOST_COOKIE_LOGIN , TAG_COOKIE_LOGIN);
     }
 

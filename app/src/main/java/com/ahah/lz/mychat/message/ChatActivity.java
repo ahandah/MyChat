@@ -54,9 +54,6 @@ public class ChatActivity extends BaseActivity {
         friend = (UserObject) it.getSerializableExtra("friend");
         tv = (EditText) findViewById(R.id.message);
 
-//      初始化wilddog
-        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
-        WilddogApp.initializeApp(this, options);
 //        SyncReference mWilddogRef = WilddogSync.getInstance().getReference(WILDDOG_URL).child("chat");
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat"+friend.fid);
