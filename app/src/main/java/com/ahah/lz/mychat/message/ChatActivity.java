@@ -1,29 +1,29 @@
 package com.ahah.lz.mychat.message;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.ahah.lz.mychat.MyAdapter;
 import com.ahah.lz.mychat.R;
+import com.ahah.lz.mychat.WildDogChat.ChatListAdapter;
 import com.ahah.lz.mychat.common.BaseActivity;
 import com.ahah.lz.mychat.common.Global;
-import com.ahah.lz.mychat.common.ImageLoadTool;
-import com.ahah.lz.mychat.model.AccountInfo;
 import com.ahah.lz.mychat.model.ChatModel;
-import com.ahah.lz.mychat.model.Friends;
 import com.ahah.lz.mychat.model.UserObject;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.wilddog.client.SyncReference;
+import com.wilddog.client.WilddogSync;
+import com.wilddog.wilddogcore.WilddogApp;
+import com.wilddog.wilddogcore.WilddogOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,55 +42,48 @@ import java.util.ArrayList;
 public class ChatActivity extends BaseActivity {
 
     private EditText tv;
-    private RecyclerView mRecyclerView;
-    private MyAdapter adapter;
-    private String HOST_CHATDATA = Global.HOST + Global.CHATDATA;
-    private String HOST_CHATSOCKET = Global.HOST + Global.CHATSOCKET;
-    private String TAG_CHATDATA = "TAG_CHATDATA";
+//    private RecyclerView mRecyclerView;
+    private ChatListAdapter adapter;
+//    private String HOST_CHATDATA = Global.HOST + Global.CHATDATA;
+//    private String HOST_CHATSOCKET = Global.HOST + Global.CHATSOCKET;
+//    private String TAG_CHATDATA = "TAG_CHATDATA";
     private UserObject friend ;
-    private int port;
-    private ArrayList<ChatModel> chatData = new ArrayList<>();
+
+    private SyncReference mWilddogRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+//      初始化wilddog
+        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
+        WilddogApp.initializeApp(this, options);
+//        SyncReference mWilddogRef = WilddogSync.getInstance().getReference(WILDDOG_URL).child("chat");
+        // Setup our Wilddog mWilddogRef
+        mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
+
 //      获取从FriendsFragment传来的好友类
         Intent it = getIntent();
         friend = (UserObject) it.getSerializableExtra("friend");
-        port = friend.fid*Global.Account.id;
-
-        getChatData();
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycleListView);
         tv = (EditText) findViewById(R.id.message);
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false);
-        mRecyclerView.setLayoutManager(manager);
-//        ChatRoom.getAddData();
-//        AccountInfo.saveChatData(this , ChatRoom.getData);
-//        ----已经写入数据到CHATDATA文件
-//        adapter = new MyAdapter(AccountInfo.loadChatData(this));
-        adapter = new MyAdapter(chatData);
+//        mRecyclerView = (RecyclerView) findViewById(R.id.recycleListView);
+//        RecyclerView.LayoutManager manager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false);
+//        mRecyclerView.setLayoutManager(manager);
+        adapter = new ChatListAdapter(mWilddogRef.limitToLast(50) , this , Global.Account.name);
         System.out.println("onCreat-----"+Global.Account.name+Global.Account.icon);
-        mRecyclerView.setAdapter(adapter);
-    }
+//        mRecyclerView.setAdapter(adapter);
+        final ListView listView = (ListView) findViewById(R.id.ChatList);
+        listView.setAdapter(adapter);
+        adapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                listView.setSelection(adapter.getCount() - 1);
+            }
+        });
 
-    public void getChatData(){
-
-        System.out.println(HOST_CHATDATA);
-        getNetwork(HOST_CHATDATA , TAG_CHATDATA);
-        RequestParams params = new RequestParams();
-        System.out.println("-----port-----"+port);
-        params.put("port" , port);
-        postNetwork(HOST_CHATSOCKET ,params , TAG_CHATDATA);
-
-    }
-
-    //使用默认图片读取配置
-    public void ImageLoad(){
-        ImageLoaderConfiguration configuration = ImageLoaderConfiguration.createDefault(ChatActivity.this);
-        ImageLoader.getInstance().init(configuration);
     }
 
     public void send(View v){
@@ -109,88 +102,12 @@ public class ChatActivity extends BaseActivity {
 //
 //        }
 
-        new MyThread(tv.getText().toString()).start();
 
-
-    }
-
-    public Socket socket;
-    public String buffer;
-
-    class MyThread extends Thread {
-
-        public String txt1;
-
-        public MyThread(String str) {
-            txt1 = str;
-        }
-
-        @Override
-        public void run() {
-            //定义消息
-            Message msg = new Message();
-            msg.what = 0x11;
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            try {
-                //连接服务器 并设置连接超时为5秒
-                socket = new Socket("192.168.1.8" , 11220+port);
-                System.out.println("connected---"+socket.isConnected());
-                OutputStream ou = socket.getOutputStream();
-                PrintWriter pw = new PrintWriter(ou);
-                pw.write(txt1);
-                pw.flush();
-                socket.shutdownOutput();
-                InputStream in = socket.getInputStream();
-                BufferedReader bf = new BufferedReader(new InputStreamReader(in));
-//                System.out.println("server----1--"+bf.read());
-                String reply=null;
-//                while(!((reply=bf.readLine())==null)){
-//                    System.out.println("接收服务器的信息："+reply);
-//                }
-//                System.out.println(reply==null);
-                System.out.println("--server----"+bf.readLine());
-                //关闭各种输入输出流
-                in.close();
-                bf.close();
-                ou.close();
-                socket.close();
-            } catch (SocketTimeoutException aa) {
-                //连接超时 在UI界面显示消息
-                bundle.putString("msg", "服务器连接失败！请检查网络是否打开");
-                msg.setData(bundle);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
         System.out.println("chatActivity----"+code+"---"+respanse+"---"+tag);
-        JSONArray jsonArray = respanse.getJSONArray("data");
-        JSONObject jsonObject;
-        adapter.mData.clear();
-        for (int i = 0 ; i < jsonArray.length() ; i++){
-
-            jsonObject = jsonArray.getJSONObject(i);
-            String sender = jsonObject.getString("sender");
-            String message = jsonObject.getString("message");
-            String time = jsonObject.getString("msgtime");
-            ChatModel chatModel = new ChatModel();
-            if (sender.equals(Global.Account.name)){
-                chatModel.chatAdd(message , Global.Account);
-                adapter.mData.add(chatModel);
-            }else if (sender.equals(friend.name)){
-                chatModel.chatAdd(message , friend);
-                adapter.mData.add(chatModel);
-            }
-        }
-
-
-        adapter.notifyDataSetChanged();
-
-        System.out.println("-----回调------"+adapter.mData.size()+Global.Account.name);
 
     }
 }

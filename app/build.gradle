@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     defaultConfig {
         applicationId "com.ahah.lz.mychat"
         minSdkVersion 14
@@ -26,7 +32,6 @@ dependencies {
     })
 
 
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
@@ -34,6 +39,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.roughike:bottom-bar:2.3.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.wilddog.client:wilddog-sync-android:2.3.6'
     testCompile 'junit:junit:4.12'
 }
 
