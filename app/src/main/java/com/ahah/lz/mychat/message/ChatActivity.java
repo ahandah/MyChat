@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.ahah.lz.mychat.MyAdapter;
 import com.ahah.lz.mychat.R;
+import com.ahah.lz.mychat.WildDogChat.Chat;
 import com.ahah.lz.mychat.WildDogChat.ChatListAdapter;
 import com.ahah.lz.mychat.common.BaseActivity;
 import com.ahah.lz.mychat.common.Global;
@@ -80,7 +81,7 @@ public class ChatActivity extends BaseActivity {
             @Override
             public void onChanged() {
                 super.onChanged();
-                listView.setSelection(adapter.getCount() - 1);
+                listView.setSelection(adapter.getCount()-1);
             }
         });
 
@@ -88,21 +89,15 @@ public class ChatActivity extends BaseActivity {
 
     public void send(View v){
 
-//        if (TextUtils.isEmpty(tv.getText())){
-//            Toast.makeText(this , "请输入发送信息！" , Toast.LENGTH_SHORT).show();
-//        }else {
-//            //发送格式 时间+用户名+内容
-//            ChatModel chatModel = new ChatModel();
-//            chatModel.chatAdd(tv.getText().toString() , Global.Account);
-//            adapter.addData(chatModel);
-//            ChatRoom.getData.add(chatModel);
-//            AccountInfo.saveChatData(this , ChatRoom.getData);
-//            tv.setText("");
-//            mRecyclerView.smoothScrollToPosition(adapter.getItemCount()-1);
-//
-//        }
-
-
+        EditText inputText = (EditText) findViewById(R.id.message);
+        String input = inputText.getText().toString();
+        if (!input.equals("")) {
+            // Create our 'model', a Chat object
+            Chat chat = new Chat(input, Global.Account.name);
+            // Create a new, auto-generated child of that chat location, and save our chat data there
+            mWilddogRef.push().setValue(chat);
+            inputText.setText("");
+        }
     }
 
     @Override

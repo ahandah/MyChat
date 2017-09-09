@@ -29,21 +29,17 @@ public class ChatListAdapter extends WilddogListAdapter<Chat> {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Chat model;
-        System.out.println("--------------"+getItemViewType(i));
+        System.out.println("-------"+getItemViewType(i)+"---"+mModels.get(i).getMessage());
         switch (getItemViewType(i)){
             case 1:
-                if (view == null){
-                    view = mInflater.inflate(R.layout.chat_item_right , viewGroup , false);
-                }
+                 view = mInflater.inflate(R.layout.chat_item_right , viewGroup , false);
                  model = mModels.get(i);
                 // Call out to subclass to marshall this model into the provided view
                 populateView(view, model);
                 return view;
 
             case 2:
-                if (view == null){
-                    view = mInflater.inflate(R.layout.chat_item_left , viewGroup , false);
-                }
+                 view = mInflater.inflate(R.layout.chat_item_left , viewGroup , false);
                  model = mModels.get(i);
                 // Call out to subclass to marshall this model into the provided view
                 populateView(view, model);
@@ -55,8 +51,8 @@ public class ChatListAdapter extends WilddogListAdapter<Chat> {
 
     @Override
     public int getItemViewType(int position) {
-        System.out.println("--"+mModels.get(position).getAuthor()+"---"+"WilddogUser52235");
-        return mModels.get(position).getAuthor().equals("WilddogUser52235") ? 1 : 2;
+        System.out.println("--"+mModels.get(position).getAuthor()+"---"+mUsername);
+        return mModels.get(position).getAuthor().equals(mUsername) ? 1 : 2;
     }
 
     /**
