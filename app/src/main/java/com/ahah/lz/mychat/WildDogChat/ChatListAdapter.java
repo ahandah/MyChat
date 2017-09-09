@@ -1,14 +1,11 @@
 package com.ahah.lz.mychat.WildDogChat;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ahah.lz.mychat.common.Global;
-import com.ahah.lz.mychat.common.ImageLoadTool;
-import com.ahah.lz.mychat.model.UserObject;
 import com.wilddog.client.Query;
 import com.ahah.lz.mychat.R;
 
@@ -22,18 +19,11 @@ import com.ahah.lz.mychat.R;
 public class ChatListAdapter extends WilddogListAdapter<Chat> {
 
     // The mUsername for this client. We use this to indicate which messages originated from this user
-    public UserObject friend;
+    public String mUsername;
 
-
-    //获得用户头像图面
-    private ImageLoadTool imageLoadTool = new ImageLoadTool();
-    protected void iconfromNetwork(ImageView view, String url) {
-        imageLoadTool.loadImage(view, url);
-    }
-
-    public ChatListAdapter(Query ref, Activity activity, UserObject friend) {
+    public ChatListAdapter(Query ref, Activity activity, String mUsername) {
         super(ref, Chat.class, activity);
-        this.friend = friend;
+        this.mUsername = mUsername;
     }
 
     @Override
@@ -45,14 +35,14 @@ public class ChatListAdapter extends WilddogListAdapter<Chat> {
                  view = mInflater.inflate(R.layout.chat_item_right , viewGroup , false);
                  model = mModels.get(i);
                 // Call out to subclass to marshall this model into the provided view
-                populateView(view, model , mModels.get(i).getAuthor());
+                populateView(view, model);
                 return view;
 
             case 2:
                  view = mInflater.inflate(R.layout.chat_item_left , viewGroup , false);
                  model = mModels.get(i);
                 // Call out to subclass to marshall this model into the provided view
-                populateView(view, model , friend.name);
+                populateView(view, model);
                 return view;
         }
 
@@ -61,8 +51,8 @@ public class ChatListAdapter extends WilddogListAdapter<Chat> {
 
     @Override
     public int getItemViewType(int position) {
-        System.out.println("--"+mModels.get(position).getAuthor()+"---"+ Global.Account.name);
-        return mModels.get(position).getAuthor().equals(Global.Account.name) ? 1 : 2;
+        System.out.println("--"+mModels.get(position).getAuthor()+"---"+mUsername);
+        return mModels.get(position).getAuthor().equals(mUsername) ? 1 : 2;
     }
 
     /**
@@ -74,18 +64,17 @@ public class ChatListAdapter extends WilddogListAdapter<Chat> {
      * @param chat An instance representing the current state of a chat message
      */
     @Override
-    protected void populateView(View view, Chat chat , String author) {
+    protected void populateView(View view, Chat chat) {
         // Map a Chat object to an entry in our listview
-        TextView chatTv = (TextView) view.findViewById(R.id.chatTV);
-        chatTv.setText(chat.getMessage());
-
-        ImageView Icon = (ImageView) view.findViewById(R.id.userIcon);
-        String iconUrl = "";
-        if (author.equals(Global.Account.name)){
-            iconUrl = Global.Account.icon;
-        } else {
-            iconUrl = friend.icon;
-        }
-        iconfromNetwork( Icon , Global.HOST+"icon/"+iconUrl);
+//        String author = chat.getAuthor();
+//        TextView authorText = (TextView) view.findViewById(R.id.chatTV);
+//        authorText.setText(author);
+//        // If the message was sent by this user, color it differently
+//        if (author != null && author.equals(mUsername)) {
+//            authorText.setTextColor(Color.RED);
+//        } else {
+//            authorText.setTextColor(Color.BLUE);
+//        }
+        ((TextView) view.findViewById(R.id.chatTV)).setText(chat.getMessage());
     }
 }

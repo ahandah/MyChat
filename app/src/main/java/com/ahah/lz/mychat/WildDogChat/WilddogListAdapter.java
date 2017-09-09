@@ -168,9 +168,8 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
         }
 
         T model = mModels.get(i);
-        String s = "";
         // Call out to subclass to marshall this model into the provided view
-        populateView(view, model , s);
+        populateView(view, model);
         return view;
     }
 
@@ -183,5 +182,5 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
      * @param v     The view to populate
      * @param model The object containing the data used to populate the view
      */
-    protected abstract void populateView(View v, T model , String s);
+    protected abstract void populateView(View v, T model);
 }
