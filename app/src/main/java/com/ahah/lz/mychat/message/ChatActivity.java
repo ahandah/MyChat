@@ -30,15 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
+
 
 public class ChatActivity extends BaseActivity {
 
@@ -57,22 +49,22 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        //      获取从FriendsFragment传来的好友类
+        Intent it = getIntent();
+        friend = (UserObject) it.getSerializableExtra("friend");
+        tv = (EditText) findViewById(R.id.message);
+
 //      初始化wilddog
         WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
         WilddogApp.initializeApp(this, options);
 //        SyncReference mWilddogRef = WilddogSync.getInstance().getReference(WILDDOG_URL).child("chat");
         // Setup our Wilddog mWilddogRef
-        mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
-
-//      获取从FriendsFragment传来的好友类
-        Intent it = getIntent();
-        friend = (UserObject) it.getSerializableExtra("friend");
-        tv = (EditText) findViewById(R.id.message);
+        mWilddogRef = WilddogSync.getInstance().getReference().child("chat"+friend.fid);
 
 //        mRecyclerView = (RecyclerView) findViewById(R.id.recycleListView);
 //        RecyclerView.LayoutManager manager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false);
 //        mRecyclerView.setLayoutManager(manager);
-        adapter = new ChatListAdapter(mWilddogRef.limitToLast(50) , this , Global.Account.name);
+        adapter = new ChatListAdapter(mWilddogRef.limitToLast(50) , this , friend);
         System.out.println("onCreat-----"+Global.Account.name+Global.Account.icon);
 //        mRecyclerView.setAdapter(adapter);
         final ListView listView = (ListView) findViewById(R.id.ChatList);
