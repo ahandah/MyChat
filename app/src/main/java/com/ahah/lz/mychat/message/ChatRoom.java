@@ -33,18 +33,18 @@ public class ChatRoom implements Serializable{
         icon = jsonObject.getString("icon");
     }
 
-    public static ArrayList<ChatModel> getAddData(){
+//    public static ArrayList<ChatModel> getAddData(){
 
-        UserObject user001 = new UserObject( 1 , "ahah" , "http://192.168.11.107/MyChat/icon/1.jpg" );
-        UserObject user002 = new UserObject( 2 , "shsh" , "http://192.168.11.107/MyChat/icon/2.jpg" );
-        ChatModel chatModel1 = new ChatModel();
-        chatModel1.chatAdd("测试己方第一条" , 1526 , user001);
-        getData.add(chatModel1);
-        ChatModel chatModel2 = new ChatModel();
-        chatModel2.chatAdd("测试对方第一条" , 1530 , user002);
-        getData.add(chatModel2);
-        return getData;
-    }
+//        UserObject user001 = new UserObject( 1 , "ahah" , "http://192.168.11.107/MyChat/icon/1.jpg" );
+//        UserObject user002 = new UserObject( 2 , "shsh" , "http://192.168.11.107/MyChat/icon/2.jpg" );
+//        ChatModel chatModel1 = new ChatModel();
+//        chatModel1.chatAdd("测试己方第一条" , 1526 , user001);
+//        getData.add(chatModel1);
+//        ChatModel chatModel2 = new ChatModel();
+//        chatModel2.chatAdd("测试对方第一条" , 1530 , user002);
+//        getData.add(chatModel2);
+//        return getData;
+//    }
 
     public static ArrayList<ChatModel> sendMessage(ChatModel chatData){
 

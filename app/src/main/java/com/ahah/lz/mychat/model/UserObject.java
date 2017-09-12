@@ -16,6 +16,7 @@ public class UserObject implements Serializable {
 
     public int id;
     public int fid;
+    public int connect;
     public String icon;
     public String name;
 
@@ -37,7 +38,8 @@ public class UserObject implements Serializable {
 
     }
 
-    public UserObject(int fid , String name , String icon ){
+    public UserObject(int fid , int connect , String name , String icon ){
+        this.connect = connect;
         this.fid = fid;
         this.name = name;
         this.icon = icon;

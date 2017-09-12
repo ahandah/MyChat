@@ -150,7 +150,7 @@ public class FriendsFragment extends BaseFragment {
                             System.out.println("fid-----"+mData.get(position).fid);
                             System.out.println("onclick--no--"+mData.get(position).name+ mData.get(position).icon);
 //                            Friends friend = mData.get(position);
-                            UserObject friend = new UserObject(mData.get(position).fid , mData.get(position).name , mData.get(position).icon);
+                            UserObject friend = new UserObject(mData.get(position).fid , mData.get(position).connect , mData.get(position).name , mData.get(position).icon);
                             System.out.println("--friendsfragment---"+friend.name);
                             //在这里传入好友的用户类（通过Bundle）
                             Intent it = new Intent(getContext() , ChatActivity.class);
@@ -239,7 +239,6 @@ public class FriendsFragment extends BaseFragment {
         Friends frObject = null;
         if (code == 2){
             if (tag.equals(TAG_FRIENDS)){
-
                 JSONArray jsonArray = respanse.getJSONArray("data");
                 for (int i = 0 ; i < jsonArray.length() ; i ++){
 
@@ -251,8 +250,9 @@ public class FriendsFragment extends BaseFragment {
                         lastFName = jsonObject.getString("frgroup");
                     }
 //                  只有一组数据的情况
-                    if (i == jsonArray.length() && !lastNameChange){
-
+                    System.out.println("-----1----"+i+"----"+jsonArray.length()+"---"+!lastNameChange);
+                    if (i == jsonArray.length()-1 && !lastNameChange){
+                        System.out.println("----2-----"+jsonArray.length());
                         frObject = new Friends(0 , lastFName , jsonFriends);
                         adapter.mData.add(frObject);
                         thFriends.add(frObject);
@@ -272,6 +272,7 @@ public class FriendsFragment extends BaseFragment {
                     }
 
                 }
+                System.out.println("---adapter.size--"+adapter.mData.size());
                 adapter.notifyDataSetChanged();
             }
         }

@@ -83,4 +83,10 @@ public class MainActivity extends AppCompatActivity {
         Intent it = new Intent(this , LoginActivity.class);
         startActivity(it);
     }
+
+    public void Info(View v){
+        Toast.makeText(MainActivity.this , "打开侧边菜单" , Toast.LENGTH_SHORT).show();
+        Intent it = new Intent(this , LoginActivity.class);
+        startActivity(it);
+    }
 }
