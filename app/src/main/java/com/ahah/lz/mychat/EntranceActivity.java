@@ -24,9 +24,9 @@ public class EntranceActivity extends AppCompatActivity implements NetworkCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrance);
-        //      初始化wilddog
-        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
-        WilddogApp.initializeApp(this, options);
+//        //      初始化wilddog
+//        WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://wd1769526484bgdoow.wilddogio.com/").build();
+//        WilddogApp.initializeApp(this, options);
         getNetwork(HOST_COOKIE_LOGIN , TAG_COOKIE_LOGIN);
     }
 
