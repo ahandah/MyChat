@@ -56,7 +56,7 @@ public class ChatActivity extends BaseActivity {
 
 //        SyncReference mWilddogRef = WilddogSync.getInstance().getReference(WILDDOG_URL).child("chat");
         // Setup our Wilddog mWilddogRef
-        mWilddogRef = WilddogSync.getInstance().getReference().child("chat"+friend.connect);
+        mWilddogRef = WilddogSync.getInstance().getReference().child("com_mychat_chat").child("chat"+friend.connect);
 
 //        mRecyclerView = (RecyclerView) findViewById(R.id.recycleListView);
 //        RecyclerView.LayoutManager manager = new LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false);

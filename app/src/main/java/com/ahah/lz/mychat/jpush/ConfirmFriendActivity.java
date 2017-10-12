@@ -1,15 +1,15 @@
-package com.ahah.lz.mychat.contact.friends;
+package com.ahah.lz.mychat.jpush;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ahah.lz.mychat.R;
 
-public class AddFriendsActivity extends AppCompatActivity {
+public class ConfirmFriendActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_friends);
+        setContentView(R.layout.activity_confirm_friend);
     }
 }

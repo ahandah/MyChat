@@ -7,6 +7,7 @@ import android.webkit.CookieSyncManager;
 import com.ahah.lz.mychat.model.UserObject;
 import com.loopj.android.http.PersistentCookieStore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.cookie.Cookie;
@@ -19,15 +20,18 @@ public class Global {
 
     public static final String HOST =
 //            "http://192.168.11.107/MyChat/";
-            "http://192.168.1.8:70/MyChat/";        //学校
+            "http://192.168.1.10:70/MyChat/";        //学校
     public static final String LOGINTAG = "LOGINTAG";
     public static final String LOGIN = "LoginServlet";
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
     public static final String MESSAGE = "MessageServlet";
     public static final String FRIENDS = "FriendsServlet";
-    public static final String CHATDATA = "ChatServlet";
-    public static final String CHATSOCKET = "ChatSocketServlet";
+//    public static final String CHATDATA = "ChatServlet";
+//    public static final String CHATSOCKET = "ChatSocketServlet";
+    public static final String SEARCHUSER = "UserServlet";
+    public static final String ADDFRIEND = "AddFriendServlet";
 
+    public static ArrayList<String> fGroup = new ArrayList<>();
     public static UserObject Account = null;
 
 

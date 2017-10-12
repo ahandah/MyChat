@@ -5,19 +5,27 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahah.lz.mychat.R;
 import com.ahah.lz.mychat.common.BaseFragment;
 import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.common.ImageLoadTool;
+import com.ahah.lz.mychat.model.AddFriend;
 import com.ahah.lz.mychat.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.wilddog.client.ChildEventListener;
+import com.wilddog.client.DataSnapshot;
+import com.wilddog.client.SyncError;
+import com.wilddog.client.SyncReference;
+import com.wilddog.client.WilddogSync;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +43,9 @@ public class MessageFragment extends BaseFragment {
     protected ArrayList<ChatRoom> msgData = new ArrayList<>();
     private String HOST_MESSAGE = Global.HOST + Global.MESSAGE;
     private String TAG_MESSAGE = "TAG_MESSAGE";
+    private SyncReference mAddFriendMsg ;
+    private ChildEventListener mListener;
+    private Class<AddFriend> mModelClass;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -45,12 +56,45 @@ public class MessageFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
+        mAddFriendMsg = WilddogSync.getInstance().getReference().child("com_mychat_addfriend").child("addfriend"+Global.Account.id);
+        System.out.println("addfriend"+Global.Account.id);
+        mListener = mAddFriendMsg.limitToLast(50).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                System.out.println("Message---onChildAdded"+dataSnapshot.getKey());
+                AddFriend addFriend = (AddFriend) dataSnapshot.getValue(AddFriend.class);
+                System.out.println("addfrien----"+Global.Account.id+addFriend.getFriend());
+                System.out.println("addfrien----"+Global.Account.id+dataSnapshot.getValue());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                System.out.println(dataSnapshot.toString());
+                AddFriend addFriend = (AddFriend) dataSnapshot.getValue();
+                System.out.println("addfrien----"+Global.Account.id+addFriend.getFriend());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(SyncError syncError) {
+                System.out.println("------"+syncError);
+            }
+        });
 //        getNetwork(HOST_MESSAGE , TAG_MESSAGE);
         return view;
     }
 
     private View initMessageFragment(View view) {
-        msgRecyclerView = (RecyclerView) view.findViewById(R.id.messageList);
+//        msgRecyclerView = (RecyclerView) view.findViewById(R.id.messageList);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext() , LinearLayoutManager.VERTICAL , false);
         msgRecyclerView.setLayoutManager(manager);
         adapter = new MsgAdapter();

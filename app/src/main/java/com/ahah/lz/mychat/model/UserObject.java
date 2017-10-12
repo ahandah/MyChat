@@ -28,6 +28,7 @@ public class UserObject implements Serializable {
     //临时先这样改，登入时验证true则使用第一个
         if(response.getString("loginTag").equals(Global.LOGINTAG)){
             System.out.println("UserObject---"+response);
+            id = response.getInt("id");
             name = response.getString("name");
             icon = response.getString("icon");
         }else {
