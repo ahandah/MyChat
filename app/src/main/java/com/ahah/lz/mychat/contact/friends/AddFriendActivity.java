@@ -16,6 +16,7 @@ import com.ahah.lz.mychat.common.BaseActivity;
 import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.common.ImageLoadTool;
 import com.ahah.lz.mychat.model.AddFriend;
+import com.ahah.lz.mychat.net.NetworkImpl;
 import com.ahah.lz.mychat.widget.CircleImageView;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,12 +24,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class AddFriendActivity extends BaseActivity {
 
+    public String url = "https://api.jpush.cn/v3/push";
+    public String tag = "ADDFRIEND";
     private CircleImageView uIcon;
     private TextView uName;
     private String uname , group;
@@ -77,22 +81,48 @@ public class AddFriendActivity extends BaseActivity {
         });
     }
 
-    public void Confirm(View view){
+    public void Confirm(View view) {
 
-        if (group == null){
-            Toast.makeText(this , "请输选择分组" , Toast.LENGTH_SHORT).show();
-        }else {
+        if (group == null) {
+            Toast.makeText(this, "请输选择分组", Toast.LENGTH_SHORT).show();
+        } else {
+            RequestParams params = new RequestParams();
+            params.put("platform", "all");
 
-            AddFriend addFriend = new AddFriend(Global.Account.name , uname , "false");
-            mAddFriendRef.push().setValue(addFriend);
-//            RequestParams params = new RequestParams();
-//            params.put("uname" , Global.Account.name);
-//            params.put("fname" , uname);
-//            params.put("group" , group);
-//            params.put("uid" , Global.Account.id);
-//            params.put("fid" , fid);
+            JSONArray alias = new JSONArray();
+            try {
+                //      -----------------alias------------------------
+                alias.put(uname);
+                JSONObject json = new JSONObject();
+                json.put("alias", alias);
+                params.put("audience", json);
+                //        params.put("audience" , "all");
+                //        ------------------notification------------------------------
+                JSONObject notification = new JSONObject();
+                notification.put("alert", Global.Account.name+"想加你为好友");
+                JSONObject notifAndroid = new JSONObject();
+                notification.put("android", notifAndroid);
+                params.put("notification", notification);
 
-//            postNetwork(HOST_ADDFRIEND , params , TAG_ADDFRIEND);
+                //        -------------------message-----------------------------------
+
+                JSONObject message = new JSONObject();
+                message.put("msg_content", Global.Account.name+"想加你为好友");
+                message.put("content_type", "text");
+                message.put("title", "msg");
+                JSONObject extras = new JSONObject();
+                extras.put("name" , Global.Account.name);
+                extras.put("id" , Global.Account.id);
+                extras.put("iconUrl" , Global.Account.icon);
+                message.put("extras" , extras);
+                params.put("message", message);
+
+                System.out.println("parms---" + params);
+                NetworkImpl network = new NetworkImpl(this, this);
+                network.addFriend(url, params, tag, NetworkImpl.Request.Post);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

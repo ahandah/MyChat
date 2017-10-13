@@ -22,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MainActivity extends BaseActivity {
 
 //    private CircleImageView uIcon;
@@ -44,6 +46,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        JPushInterface.setAlias(this , Global.Account.id , Global.Account.name);
         getNetwork(HOST_GROUP , TAG_GROUP);
 
     }
