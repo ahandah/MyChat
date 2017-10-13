@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.ahah.lz.mychat.common.Global;
+import com.ahah.lz.mychat.model.UserObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
@@ -21,7 +25,16 @@ import cn.jpush.android.api.JPushInterface;
  * 2) 接收不到自定义消息
  */
 public class MyReceiver extends BroadcastReceiver {
+
 	private static final String TAG = "JIGUANG-Example";
+	public static final String KEY_MESSAGE = "message";
+	public static final String KEY_EXTRAS = "extras";
+	public static String message = "";
+//	public static JSONObject extras = new JSONObject();
+	public static String extras = "";
+	private String iconUrl = "";
+	private String id = "";
+	private String uname = "";
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -37,6 +50,17 @@ public class MyReceiver extends BroadcastReceiver {
 			} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 //				processCustomMessage(context, bundle);
+				message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+				System.out.println("----receiver--1---"+message);
+				extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				System.out.println("----receiver--2---"+extras);
+				iconUrl = extras.substring(extras.indexOf("iconUrl")+10 , extras.indexOf("name")-3);
+				uname = extras.substring(extras.indexOf("name")+7 , extras.indexOf("id")-3);
+				id = extras.substring(extras.indexOf("id")+4 , extras.indexOf("}"));
+				System.out.println("test-------"+iconUrl+"--"+uname+"--"+id);
+				UserObject addFRequest = new UserObject(Integer.parseInt(id) , uname ,iconUrl);
+				Global.fRequest.add(addFRequest);
+//				extras = (JSONObject) bundle.get(JPushInterface.EXTRA_EXTRA);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 				Logger.d(TAG, "[MyReceiver] 接收到推送下来的通知");
@@ -47,7 +71,9 @@ public class MyReceiver extends BroadcastReceiver {
 				Logger.d(TAG, "[MyReceiver] 用户点击打开了通知");
 
 				Intent i = new Intent(context , ConfirmFriendActivity.class);
-
+				System.out.println("----receiver-----"+message);
+				i.putExtra(KEY_MESSAGE , message);
+				i.putExtra(KEY_EXTRAS , extras);
 				context.startActivity(i);
 
 //				//打开自定义的Activity
@@ -107,11 +133,17 @@ public class MyReceiver extends BroadcastReceiver {
 		return sb.toString();
 	}
 	
-//	//send msg to MainActivity
+	//send msg to MainActivity
 //	private void processCustomMessage(Context context, Bundle bundle) {
+
 //		if (MainActivity.isForeground) {
 //			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 //			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+//		System.out.println("processCust--extras---"+extras);
+//		System.out.println("processCust--message---"+message);
+//		Intent msgIntent = new Intent(ConfirmFriendActivity.MESSAGE_RECEIVED_ACTION);
+//		msgIntent.putExtra(ConfirmFriendActivity.KEY_MESSAGE , message);
+//		msgIntent.putExtra(ConfirmFriendActivity.KEY_EXTRAS , extras);
 //			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
 //			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
 //			if (!ExampleUtil.isEmpty(extras)) {

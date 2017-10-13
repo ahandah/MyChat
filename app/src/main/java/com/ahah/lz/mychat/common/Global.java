@@ -32,6 +32,7 @@ public class Global {
     public static final String ADDFRIEND = "AddFriendServlet";
 
     public static ArrayList<String> fGroup = new ArrayList<>();
+    public static ArrayList<UserObject> fRequest = new ArrayList<>();
     public static UserObject Account = null;
 
 

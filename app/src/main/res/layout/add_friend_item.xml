@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    tools:context="com.ahah.lz.mychat.message.ChatActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="60dp">
+
+        <com.ahah.lz.mychat.widget.CircleImageView
+            android:id="@+id/uIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/ic_launcher"
+            app:border_color="#E0E0E0"
+            app:border_width="1dp"/>
+
+        <TextView
+            android:id="@+id/uname"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:gravity="left|center"
+            android:text="ahah"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/accpet"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="接受"/>
+
+        <Button
+            android:id="@+id/refuse"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="拒绝"/>
+
+    </LinearLayout>
+
+</LinearLayout>

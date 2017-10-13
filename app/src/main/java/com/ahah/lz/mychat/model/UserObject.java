@@ -46,7 +46,8 @@ public class UserObject implements Serializable {
         this.icon = icon;
     }
 
-    public UserObject(String name , String icon ){
+    public UserObject(int id , String name , String icon ){
+        this.id = id;
         this.name = name;
         this.icon = icon;
     }
