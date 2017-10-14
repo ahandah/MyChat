@@ -39,22 +39,25 @@ public class AddFriendActivity extends BaseActivity {
     private int fid;
     private String iconUrl;
     private Spinner groupSpinner;
-    private String HOST_ADDFRIEND = Global.HOST + Global.ADDFRIEND;
+//    private String HOST_ADDFRIEND = Global.HOST + Global.ADDFRIEND;
     private String TAG_ADDFRIEND = "TAG_ADDFRIEND";
     private SyncReference mAddFriendRef;
+    private NetworkImpl network;
+    private RequestParams confirmParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
 
+        network = new NetworkImpl(this , this);
         Intent it = getIntent();
         Bundle bundle = it.getBundleExtra("data");
         uname = bundle.getString("fname");
         iconUrl = bundle.getString("iconUrl");
         fid = bundle.getInt("fid");
 
-        mAddFriendRef = WilddogSync.getInstance().getReference().child("com_mychat_addfriend").child("addfriend"+fid);
+//        mAddFriendRef = WilddogSync.getInstance().getReference().child("com_mychat_addfriend").child("addfriend"+fid);
         uIcon = (CircleImageView) findViewById(R.id.userIcon);
         uName = (TextView) findViewById(R.id.uName);
         groupSpinner = (Spinner) findViewById(R.id.groupSpinner);
@@ -86,44 +89,15 @@ public class AddFriendActivity extends BaseActivity {
         if (group == null) {
             Toast.makeText(this, "请输选择分组", Toast.LENGTH_SHORT).show();
         } else {
-            RequestParams params = new RequestParams();
-            params.put("platform", "all");
-
-            JSONArray alias = new JSONArray();
-            try {
-                //      -----------------alias------------------------
-                alias.put(uname);
-                JSONObject json = new JSONObject();
-                json.put("alias", alias);
-                params.put("audience", json);
-                //        params.put("audience" , "all");
-                //        ------------------notification------------------------------
-                JSONObject notification = new JSONObject();
-                notification.put("alert", Global.Account.name+"想加你为好友");
-                JSONObject notifAndroid = new JSONObject();
-                notification.put("android", notifAndroid);
-                params.put("notification", notification);
-
-                //        -------------------message-----------------------------------
-
-                JSONObject message = new JSONObject();
-                message.put("msg_content", Global.Account.name+"想加你为好友");
-                message.put("content_type", "text");
-                message.put("title", "msg");
-                JSONObject extras = new JSONObject();
-                extras.put("name" , Global.Account.name);
-                extras.put("id" , Global.Account.id);
-                extras.put("iconUrl" , Global.Account.icon);
-                message.put("extras" , extras);
-                params.put("message", message);
-
-                System.out.println("parms---" + params);
-                NetworkImpl network = new NetworkImpl(this, this);
-                network.addFriend(url, params, tag, NetworkImpl.Request.Post);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            confirmParams = new RequestParams();
+            confirmParams.put("uname" , Global.Account.name);
+            confirmParams.put("fname" , uname);
+            confirmParams.put("uid" , Global.Account.id);
+            confirmParams.put("group" , group);
+            confirmParams.put(Global.ACCPET , Global.ACCPET);
+            network.loadData(Global.HOST_ADDFRIEND, confirmParams, TAG_ADDFRIEND, NetworkImpl.Request.Post);
         }
+
     }
 
     public void Remove(View view){
@@ -147,5 +121,49 @@ public class AddFriendActivity extends BaseActivity {
     public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
 
         System.out.println("AddFriendActivity---"+code+"--"+respanse+"--"+tag);
+        if (code == 21){
+            Toast.makeText( getApplicationContext() , respanse.getString("data") , Toast.LENGTH_SHORT).show();
+        } else if (code == 2){
+            Toast.makeText( getApplicationContext() , respanse.getString("data") , Toast.LENGTH_SHORT).show();
+
+            RequestParams params = new RequestParams();
+            params.put("platform", "all");
+            JSONArray alias = new JSONArray();
+            try {
+            //      -----------------alias------------------------
+            alias.put(uname);
+            JSONObject json = new JSONObject();
+            json.put("alias", alias);
+            params.put("audience", json);
+                //        params.put("audience" , "all");
+                //        ------------------notification------------------------------
+                JSONObject notification = new JSONObject();
+                notification.put("alert", Global.Account.name+"想加你为好友");
+                JSONObject notifAndroid = new JSONObject();
+                notification.put("android", notifAndroid);
+                params.put("notification", notification);
+
+                //        -------------------message-----------------------------------
+
+                JSONObject message = new JSONObject();
+                message.put("msg_content", Global.Account.name+"想加你为好友");
+                message.put("content_type", "text");
+                message.put("title", "msg");
+                JSONObject extras = new JSONObject();
+                extras.put("name" , Global.Account.name);
+                extras.put("id" , Global.Account.id);
+                extras.put("iconUrl" , Global.Account.icon);
+                message.put("extras" , extras);
+                params.put("message", message);
+
+                System.out.println("parms---" + params);
+                network = new NetworkImpl(this, this);
+                network.addFriend(url, params, tag, NetworkImpl.Request.Post);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

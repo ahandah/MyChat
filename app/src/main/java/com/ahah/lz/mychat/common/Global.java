@@ -21,6 +21,7 @@ public class Global {
     public static final String HOST =
 //            "http://192.168.11.107/MyChat/";
             "http://192.168.1.10:70/MyChat/";        //学校
+    public static final String HOST_ADDFRIEND = Global.HOST + Global.ADDFRIEND;
     public static final String LOGINTAG = "LOGINTAG";
     public static final String LOGIN = "LoginServlet";
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
@@ -30,6 +31,9 @@ public class Global {
 //    public static final String CHATSOCKET = "ChatSocketServlet";
     public static final String SEARCHUSER = "UserServlet";
     public static final String ADDFRIEND = "AddFriendServlet";
+
+    public static final String ACCPET = "accpet";
+    public static final String REFUSE = "refuse";
 
     public static ArrayList<String> fGroup = new ArrayList<>();
     public static ArrayList<UserObject> fRequest = new ArrayList<>();
