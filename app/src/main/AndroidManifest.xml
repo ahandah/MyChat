@@ -167,7 +167,15 @@
             android:value="5f123dd88b4ebb40871ad754" />
         <!-- </>值来自开发者平台取得的AppKey -->
 
-        <activity android:name=".jpush.ConfirmFriendActivity"></activity>
+        <activity android:name=".jpush.ConfirmFriendActivity" />
+        <activity android:name=".UserInfoActivity" />
+        <activity android:name=".UpLoadIconActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

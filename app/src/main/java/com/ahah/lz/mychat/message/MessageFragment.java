@@ -1,6 +1,8 @@
 package com.ahah.lz.mychat.message;
 
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import com.ahah.lz.mychat.common.BaseFragment;
 import com.ahah.lz.mychat.common.Global;
 import com.ahah.lz.mychat.common.ImageLoadTool;
 import com.ahah.lz.mychat.model.AddFriend;
+import com.ahah.lz.mychat.net.MyAsyncHttpClient;
 import com.ahah.lz.mychat.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -47,15 +51,19 @@ public class MessageFragment extends BaseFragment {
     private ChildEventListener mListener;
     private Class<AddFriend> mModelClass;
 
+
     public MessageFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
+
+
         mAddFriendMsg = WilddogSync.getInstance().getReference().child("com_mychat_addfriend").child("addfriend"+Global.Account.id);
         System.out.println("addfriend"+Global.Account.id);
         mListener = mAddFriendMsg.limitToLast(50).addChildEventListener(new ChildEventListener() {

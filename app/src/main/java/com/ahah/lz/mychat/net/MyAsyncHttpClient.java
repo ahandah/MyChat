@@ -11,12 +11,19 @@ import com.loopj.android.http.PersistentCookieStore;
 
 public class MyAsyncHttpClient {
 
+    private static PersistentCookieStore persistentCookieStore;
+//    public PersistentCookieStore persistentCookieStore;
+
     public static AsyncHttpClient createClient(Context context){
         AsyncHttpClient client = new AsyncHttpClient();
-        PersistentCookieStore persistentCookieStore = new PersistentCookieStore(context);
+        persistentCookieStore = new PersistentCookieStore(context);
         client.setCookieStore(persistentCookieStore);
         client.setTimeout(30*1000);
         return client;
+    }
+
+    public static void clearCookie(){
+        persistentCookieStore.clear();
     }
 
 //    public static AsyncHttpClient socketClient(Context context){

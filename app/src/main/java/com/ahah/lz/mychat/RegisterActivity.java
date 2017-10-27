@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ahah.lz.mychat.common.BaseActivity;
+import com.ahah.lz.mychat.common.Global;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONException;
@@ -20,7 +21,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText reupwd;
     private EditText ricon;
     private String rname , rpwd , repwd , icon , pwd;
-    private String HOST_REGISTER = "http://192.168.11.107/MyChat/register1.action";
+    private String HOST_REGISTER = Global.HOST + Global.REGISTER;
     private String TAG_REGITSTER = "TAG_REGISTER";
 
     @Override

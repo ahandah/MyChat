@@ -31,13 +31,20 @@ public class NetworkImpl {
         this.callback = callback;
     }
 
-    public void connectedSocket(String url , Request type){
+    public void loadData2(String url , RequestParams params , final String tag , Request type){
+
         AsyncHttpClient client = MyAsyncHttpClient.createClient(context);
+//        client.addHeader("Content-Type" , "multipart/form-data;boundary=rxU1IcP2kHsJVF37W5_8tRtSlAnB-KIhGP");
+//        client.addHeader("Accept", "*/*");
+
         JsonHttpResponseHandler jsonHttpResponseHandler = new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
+                System.out.println("onSuccess--statusCode--"+statusCode);
+                System.out.println("onSuccess--headers--"+headers);
+                System.out.println("onSuccess--JSONObject--"+response);
             }
 
             @Override
@@ -47,10 +54,41 @@ public class NetworkImpl {
                 System.out.println("onFailure--statusCode--"+statusCode);
                 System.out.println("onFailure--headers--"+headers);
                 System.out.println("onFailure--throwable--"+throwable);
+                try {
+                    callback.parseJson(4 , null , tag);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
-
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println("onFailure--respon--"+errorResponse);
+                System.out.println("onFailure--statusCode--"+statusCode);
+                System.out.println("onFailure--headers--"+headers);
+                System.out.println("onFailure--throwable--"+throwable);
+                try {
+                    callback.parseJson(4 , errorResponse , tag);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         };
+
+        switch (type){
+            case Get:
+                System.out.println("--get-"+url);
+                client.post(url , jsonHttpResponseHandler);
+                break;
+            case Post:
+                System.out.println("--post-"+url);
+                client.post(url , params , jsonHttpResponseHandler);
+                break;
+            case Put:
+                break;
+            case Delete:
+                break;
+        }
     }
 
     public void loadData(String url , RequestParams params , final String tag , Request type){
@@ -87,9 +125,25 @@ public class NetworkImpl {
                 System.out.println("onFailure--statusCode--"+statusCode);
                 System.out.println("onFailure--headers--"+headers);
                 System.out.println("onFailure--throwable--"+throwable);
+                try {
+                    callback.parseJson(4 , null , tag);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
-
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println("onFailure--respon--"+errorResponse);
+                System.out.println("onFailure--statusCode--"+statusCode);
+                System.out.println("onFailure--headers--"+headers);
+                System.out.println("onFailure--throwable--"+throwable);
+                try {
+                    callback.parseJson(4 , errorResponse , tag);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         };
 
         switch (type){

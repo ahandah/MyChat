@@ -1,9 +1,15 @@
 package com.ahah.lz.mychat.common;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.ahah.lz.mychat.user.StartActivity;
 import com.ahah.lz.mychat.model.UserObject;
 import com.loopj.android.http.PersistentCookieStore;
 
@@ -24,6 +30,7 @@ public class Global {
     public static final String HOST_ADDFRIEND = Global.HOST + Global.ADDFRIEND;
     public static final String LOGINTAG = "LOGINTAG";
     public static final String LOGIN = "LoginServlet";
+    public static final String REGISTER = "register1.action";
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
     public static final String MESSAGE = "MessageServlet";
     public static final String FRIENDS = "FriendsServlet";
@@ -51,4 +58,36 @@ public class Global {
             cookieManager.setCookie(Global.HOST , String.format("username=%s;password=%s", eachCookie.getName() , eachCookie.getValue()));
         }
     }
+
+    static public void cropImageUri(StartActivity activity, Uri uri, Uri outputUri, int outputX, int outputY, int requestCode) {
+        try {
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            intent.setDataAndType(uri, "image/*");
+            intent.putExtra("crop", "true");
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", outputX);
+            intent.putExtra("outputY", outputY);
+            intent.putExtra("scale", true);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+            intent.putExtra("return-data", false);
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            intent.putExtra("noFaceDetection", true);
+            activity.startActivityForResult(intent, requestCode);
+        } catch (Exception e) {
+            Global.errorLog(e);
+        }
+    }
+
+
+    public static void errorLog(Exception e) {
+        if (e == null) {
+            return;
+        }
+
+        e.printStackTrace();
+        Log.e("", "" + e);
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package com.ahah.lz.mychat.model;
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.ahah.lz.mychat.message.ChatRoom;
 
@@ -104,5 +106,29 @@ public class AccountInfo {
     public static void saveChat(){
 
     }
+
+    public static void loginOut(Context ctx) {
+        File dir = ctx.getFilesDir();
+        String[] fileNameList = dir.list();
+        for (String item : fileNameList) {
+            File file = new File(dir, item);
+            if (file.exists() && !file.isDirectory()) {
+                file.delete();
+            }
+        }
+
+//        AccountInfo.setNeedPush(ctx, true);
+
+        NotificationManager notificationManager = (NotificationManager)
+                ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+
+//    public static void setNeedPush(Context ctx, boolean push) {
+//        SharedPreferences sp = ctx.getSharedPreferences(FILE_PUSH, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putBoolean(KEY_NEED_PUSH, push);
+//        editor.commit();
+//    }
 
 }
