@@ -34,6 +34,7 @@ public class Global {
     public static final String COOKIE_LOGIN ="cookielogin.jsp";
     public static final String MESSAGE = "MessageServlet";
     public static final String FRIENDS = "FriendsServlet";
+    public static final String DELFRIEND = "DelFriendServlet";
 //    public static final String CHATDATA = "ChatServlet";
 //    public static final String CHATSOCKET = "ChatSocketServlet";
     public static final String SEARCHUSER = "UserServlet";

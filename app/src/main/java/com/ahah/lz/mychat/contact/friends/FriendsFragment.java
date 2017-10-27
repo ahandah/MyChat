@@ -153,7 +153,7 @@ public class FriendsFragment extends BaseFragment {
                             UserObject friend = new UserObject(mData.get(position).fid , mData.get(position).connect , mData.get(position).name , mData.get(position).icon);
                             System.out.println("--friendsfragment---"+friend.name);
                             //在这里传入好友的用户类（通过Bundle）
-                            Intent it = new Intent(getContext() , ChatActivity.class);
+                            Intent it = new Intent(getContext() , FriendInfoActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("friend" , friend);
                             it.putExtras(bundle);
@@ -228,10 +228,21 @@ public class FriendsFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void parseJson(int code, JSONObject respanse, String tag) throws JSONException {
-
+        /*
+        * 组名展开思路：
+        * 得到的数据  先判断元素组名是否与最后一次组名相同
+        * 相同 添加元素至jsonFriends
+        * 不相同 frObject = new Friends(0 , lastFName , jsonFriends);
+        *        frObject添加至mData
+        * */
         ArrayList<Friends> jsonFriends = new ArrayList<>();
         Boolean lastNameChange = false;
         String lastFName = null;
@@ -243,24 +254,15 @@ public class FriendsFragment extends BaseFragment {
                 for (int i = 0 ; i < jsonArray.length() ; i ++){
 
                     jsonObject = jsonArray.getJSONObject(i);
-                    Friends friend = new Friends(jsonObject);
-                    jsonFriends.add(friend);
+                    System.out.println("frgroup----"+jsonObject.getString("frgroup"));
+
 //                  记录下最后一次的分类名
                     if (i == 0){
                         lastFName = jsonObject.getString("frgroup");
                     }
-//                  只有一组数据的情况
-                    System.out.println("-----1----"+i+"----"+jsonArray.length()+"---"+!lastNameChange);
-                    if (i == jsonArray.length()-1 && !lastNameChange){
-                        System.out.println("----2-----"+jsonArray.length());
-                        frObject = new Friends(0 , lastFName , jsonFriends);
-                        adapter.mData.add(frObject);
-                        thFriends.add(frObject);
-                        jsonFriends.clear();
-                    }
 
                     if (!lastFName.equals(jsonObject.getString("frgroup"))){
-
+                        System.out.println("ininininin");
                         lastNameChange = true;
                         frObject = new Friends(0 , lastFName , jsonFriends);
                         adapter.mData.add(frObject);
@@ -269,6 +271,15 @@ public class FriendsFragment extends BaseFragment {
                         lastFName = jsonObject.getString("frgroup");
                         System.out.println("--mData.size---"+adapter.mData.size()+
                                 "---mData.friends.size----"+adapter.mData.get(0).friends.size());
+                    }
+
+                    Friends friend = new Friends(jsonObject);
+                    jsonFriends.add(friend);
+//                    最后一位元素加入mData
+                    if (i == jsonArray.length() - 1){
+
+                        frObject = new Friends(0 , lastFName , jsonFriends);
+                        adapter.mData.add(frObject);
                     }
 
                 }
