@@ -6,6 +6,7 @@ import java.util.Objects;
 
 /**
  * 以后添加emji表情、图片、文件
+ * Socket
  * Created by 40660 on 2017/7/13.
  */
 

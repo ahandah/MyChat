@@ -72,4 +72,9 @@ public class EntranceActivity extends AppCompatActivity implements NetworkCallba
         Intent it = new Intent(EntranceActivity.this , LoginActivity.class);
         startActivity(it);
     }
+
+    public void enRegister(View v){
+        Intent it = new Intent(EntranceActivity.this , RegisterActivity.class);
+        startActivity(it);
+    }
 }

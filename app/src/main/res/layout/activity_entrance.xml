@@ -7,15 +7,43 @@
     android:orientation="vertical"
     tools:context="com.ahah.lz.mychat.EntranceActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="进入页面"/>
-
-    <Button
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="登入"
-        android:onClick="enLogin"/>
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/logo1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="登入"
+            android:onClick="enLogin"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="注册"
+            android:onClick="enRegister"/>
+
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="进入页面"/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="登入"-->
+        <!--android:onClick="enLogin"/>-->
 
 </LinearLayout>
